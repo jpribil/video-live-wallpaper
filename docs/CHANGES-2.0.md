@@ -37,7 +37,7 @@ it was checked. The architecture that resulted is described in
 | 3.2 | `proguard-rules.pro` referenced but missing; R8 disabled. | R8 and resource shrinking enabled, rules file added. Release APK: **2.0 MB** (1.3.0: 5.0 MB), even with Media3 added. |
 | 3.3 | Unneeded `READ_MEDIA_VIDEO` / `READ_EXTERNAL_STORAGE` permissions. | Removed. The app requests no permissions at all. |
 | 3.4 | `androidx.preference` used only for `getDefaultSharedPreferences`. | Removed (and `cardview`, `constraintlayout`). `SettingsStore` opens the same preference file directly. |
-| 3.5 | No CI, tests only for the GIF decoder. | GitHub Actions workflow (lint, unit tests, debug + release builds, APK artifacts). New unit tests for crop geometry, error classification, formatting and settings compatibility (35 tests in total). Lint errors fail the build. |
+| 3.5 | No CI, tests only for the GIF decoder. | GitHub Actions workflow (lint, unit tests, debug + release builds, APK artifacts). New unit tests for crop geometry, error classification, formatting and settings compatibility (35 tests in total). Lint errors fail the build. The workflow runs green on this fork. |
 
 ## 4. Smaller items
 
