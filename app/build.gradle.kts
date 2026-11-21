@@ -7,7 +7,10 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "io.github.codeg0blin.videowallpaper"
+        // Own ID for the fork, so it never collides with the original app
+        // (io.github.codeg0blin.videowallpaper, distributed on F-Droid).
+        // The Kotlin package / namespace keeps the original name.
+        applicationId = "cz.pribil.videowallpaper"
         minSdk = 26
         targetSdk = 36
         versionCode = 11

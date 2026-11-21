@@ -97,10 +97,7 @@ class MainActivity : AppCompatActivity(), PlaybackController.Listener,
         renderSettings(store.load(), mediaChanged = true)
         store.prefs.registerOnSharedPreferenceChangeListener(this)
 
-        if (savedInstanceState == null) {
-            importer.migrateLegacySelection()
-            importer.cleanUp()
-        }
+        if (savedInstanceState == null) importer.cleanUp()
     }
 
     override fun onStart() {
@@ -366,17 +363,7 @@ class MainActivity : AppCompatActivity(), PlaybackController.Listener,
     }
 
     private fun loadPreviewMedia(media: WallpaperMedia?) {
-        if (media == null || media.isGif != null) {
-            controller.setMedia(media)
-            return
-        }
-        // A 1.x selection whose type isn't stored yet: find out off the main thread.
-        lifecycleScope.launch {
-            val known = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                MediaLibrary(this@MainActivity).detectKind(media)
-            }
-            if (settings?.media == media) controller.setMedia(known)
-        }
+        controller.setMedia(media)
     }
 
     private fun updatePanHint() {

@@ -7,11 +7,20 @@ A small Android app that lets you pick any video or animated GIF from your devic
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" width="260" alt="Android's live wallpaper preview screen">
 </p>
 
-> **This is a fork** of [codeg0blin/video-live-wallpaper](https://github.com/codeg0blin/video-live-wallpaper).
-> Version 2.0 reworks playback, adds several features and fixes stability problems;
-> see [docs/CHANGES-2.0.md](docs/CHANGES-2.0.md) for what changed and why, and
-> [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the app is put together.
-> The screenshots above are still from version 1.3.
+## What this fork changes
+
+This is a fork of [codeg0blin/video-live-wallpaper](https://github.com/codeg0blin/video-live-wallpaper) (version 1.3.0). Compared with the original:
+
+- **Separate app:** own application ID `cz.pribil.videowallpaper`, so it installs next to the original instead of replacing it
+- **Reliable files:** the picked file is copied into the app, so moving or deleting the original doesn't break the wallpaper; no permissions at all
+- **Stability:** fixes a render-thread crash and an OpenGL context leak; errors are retried or shown in the app instead of silently clearing the wallpaper
+- **Playback:** Media3 ExoPlayer instead of `MediaPlayer`, for seamless looping and consistent behaviour across devices
+- **New options:** choose the visible part by dragging, loop a section of a video, parallax with home screen pages, pause in Battery Saver, restart on show
+- **Integration:** Material You colours follow the wallpaper; "Settings" button in the system wallpaper picker
+- **App:** preview shaped like the screen that matches the wallpaper exactly; Czech translation
+- **Build:** current toolchain (AGP 9, targetSdk 36), R8 shrinking (APK 5.0 → 2.0 MB), 35 unit tests, GitHub Actions CI
+
+Details: [docs/CHANGES-2.0.md](docs/CHANGES-2.0.md) (what changed, why, and how it was tested) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). The screenshots above are still from the original 1.3.
 
 ## Features
 
@@ -61,9 +70,9 @@ The app has no internet permission and no storage permission, and contains no an
 Open the project in Android Studio, or build from the command line:
 
 ```
-./gradlew assembleDebug      # debug build, ID ...videowallpaper.debug, installs next to other builds
-./gradlew assembleStaging    # R8-shrunk release build signed with the debug key, ID ...videowallpaper.staging
-./gradlew assembleRelease    # unsigned release build
+./gradlew assembleDebug      # debug build, ID cz.pribil.videowallpaper.debug
+./gradlew assembleStaging    # R8-shrunk release build signed with the debug key, ID cz.pribil.videowallpaper.staging
+./gradlew assembleRelease    # unsigned release build, ID cz.pribil.videowallpaper
 ./gradlew testDebugUnitTest  # unit tests (GIF decoder, crop geometry, error handling, formatting)
 ./gradlew lintDebug          # Android lint (errors fail the build)
 ```
@@ -74,7 +83,7 @@ The *Build* GitHub Actions workflow (`.github/workflows/build.yml`) runs lint, t
 
 ## Changelog
 
-Per-version release notes are in [`fastlane/metadata/android/en-US/changelogs`](fastlane/metadata/android/en-US/changelogs) (and `cs-CZ`), named by version code. Version 2.0.0 is version code 11.
+Per-version release notes are in [`fastlane/metadata/android/en-US/changelogs`](fastlane/metadata/android/en-US/changelogs) (and `cs-CZ`), named by version code. Versions 1–10 are the original app's; this fork's 2.0.0 is version code 11.
 
 ## Contributing
 

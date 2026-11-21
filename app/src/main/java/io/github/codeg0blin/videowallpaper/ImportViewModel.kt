@@ -57,34 +57,6 @@ class ImportViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    /**
-     * One-time upgrade from version 1.x: a selection saved as a `content://`
-     * URI is copied into private storage. If the original is no longer
-     * readable the old selection is left as it was (the wallpaper keeps
-     * trying it, and the app shows why it fails).
-     */
-    fun migrateLegacySelection() {
-        val media = store.load().media ?: return
-        if (!library.isLegacy(media) || _state.value is State.Copying) return
-        _state.value = State.Copying(-1f)
-        viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                library.import(media.uri) { p -> _state.value = State.Copying(p) }
-            }
-            if (result is MediaLibrary.Result.Success) {
-                // Keep the user's speed/crop choices; only the file moves.
-                val old = store.load()
-                store.setMedia(result.media, result.displayName, result.durationMs)
-                store.setFocus(old.focusX, old.focusY)
-                withContext(Dispatchers.IO) {
-                    library.deleteAllExcept(result.media.uri)
-                    library.releaseAllPersistedPermissions()
-                }
-            }
-            _state.value = State.Idle
-        }
-    }
-
     /** Removes files from interrupted imports. */
     fun cleanUp() {
         val keep = store.load().media?.uri

@@ -31,7 +31,7 @@ matches the wallpaper exactly.
 |---|---|
 | `MainActivity.kt` | Settings screen: preview, file picking, controls, problem banner, launches the system wallpaper picker. |
 | `PreviewFrame.kt` | Container with the screen's aspect ratio and rounded clipping for the preview `TextureView`. |
-| `ImportViewModel.kt` | Runs imports outside the activity (survives rotation); one-time upgrade of a 1.x `content://` selection. |
+| `ImportViewModel.kt` | Runs imports outside the activity (survives rotation) and cleans up leftovers. |
 | `MediaLibrary.kt` | Copies a picked file into `files/media/`, validates it (GIF parse / video track present), cleans up old copies, releases picker permissions. |
 | `VideoWallpaperService.kt` | The live wallpaper. Each `Engine` translates wallpaper events and settings into `PlaybackController` calls, and reports the wallpaper's colours. |
 | `PlaybackController.kt` | Plays one video or GIF onto one surface. Owns the ExoPlayer, the render thread, the renderer and the GIF player. |
@@ -60,7 +60,7 @@ matches the wallpaper exactly.
   (`setOnFrameAvailableListener(listener, handler)`).
 
 Blocking work that isn't playback (file copy, GIF validation, video probing,
-frame grabbing for colours, sniffing a 1.x selection's type) runs on
+frame grabbing for colours) runs on
 background threads: a coroutine on `Dispatchers.IO` in the app, a single
 executor in the service.
 
@@ -101,9 +101,10 @@ the renderer on the same surface (at most three times).
 
 ## Settings and visibility
 
-`SettingsStore` keeps using the preference file and keys of version 1.x
+`SettingsStore` keeps the preference file name and keys of the original app
 (`selected_video_uri`, `playback_speed`, `scaling_mode` with the old
-`MediaPlayer` constants), so upgrades keep their settings. New keys:
+`MediaPlayer` constants), so the code stays comparable with upstream. Keys
+added by the fork:
 `media_kind`, `media_display_name`, `media_duration_ms`, `crop_focus_x/y`,
 `trim_start_ms`, `trim_end_ms`, `parallax`, `pause_on_power_save`,
 `restart_on_show`, `last_problem`.
@@ -140,10 +141,12 @@ holds no URI permissions at all.
 
 ## Build types
 
-| Type | ID suffix | Shrunk (R8) | Signed with |
+| Type | Application ID | Shrunk (R8) | Signed with |
 |---|---|---|---|
-| debug | `.debug` | no | debug key |
-| staging | `.staging` | yes | debug key |
-| release | — | yes | (unsigned; sign for distribution) |
+| debug | `cz.pribil.videowallpaper.debug` | no | debug key |
+| staging | `cz.pribil.videowallpaper.staging` | yes | debug key |
+| release | `cz.pribil.videowallpaper` | yes | (unsigned; sign for distribution) |
 
-The suffixes let the debug and staging builds be installed side by side with a release build of the app.
+All three install side by side, and next to the original app
+(`io.github.codeg0blin.videowallpaper`). The Kotlin package and Gradle
+`namespace` keep the original name.

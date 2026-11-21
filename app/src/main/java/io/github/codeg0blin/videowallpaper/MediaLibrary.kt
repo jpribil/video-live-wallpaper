@@ -116,13 +116,7 @@ class MediaLibrary(context: Context) {
         dir.listFiles()?.forEach { f -> if (f.absolutePath != keepPath) f.delete() }
     }
 
-    /** True for a `content://` selection saved by version 1.x that should be copied in. */
-    fun isLegacy(media: WallpaperMedia): Boolean = media.uri.scheme == "content"
-
-    /**
-     * Gives back every persisted picker permission. Since 2.0 the app never
-     * needs one after copying, and version 1.x never released old ones.
-     */
+    /** Gives back every persisted picker permission; none is needed once the file is copied. */
     fun releaseAllPersistedPermissions() {
         for (p in resolver.persistedUriPermissions) {
             try {
@@ -132,11 +126,6 @@ class MediaLibrary(context: Context) {
             }
         }
     }
-
-    /** Works out whether a 1.x selection (kind not stored) is a GIF. */
-    @WorkerThread
-    fun detectKind(media: WallpaperMedia): WallpaperMedia =
-        if (media.isGif != null) media else media.copy(isGif = GifFiles.looksLikeGif(resolver, media.uri))
 
     /** Video length in ms, or null if [file] has no video track. */
     @WorkerThread

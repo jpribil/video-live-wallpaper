@@ -6,8 +6,8 @@ import android.net.Uri
 import androidx.core.content.edit
 import androidx.core.net.toUri
 
-/** The file the wallpaper plays. [isGif] is null for selections saved by app versions before 2.0. */
-data class WallpaperMedia(val uri: Uri, val isGif: Boolean?)
+/** The file the wallpaper plays: a copy in the app's private storage (see [MediaLibrary]). */
+data class WallpaperMedia(val uri: Uri, val isGif: Boolean)
 
 /** Everything the wallpaper and the preview need to know, read in one go. */
 data class WallpaperSettings(
@@ -27,7 +27,7 @@ data class WallpaperSettings(
     val restartOnShow: Boolean
 ) {
     /** Trim only applies to videos; GIFs always play whole. */
-    val hasTrim: Boolean get() = media?.isGif != true && (trimStartMs > 0 || trimEndMs > 0)
+    val hasTrim: Boolean get() = media?.isGif == false && (trimStartMs > 0 || trimEndMs > 0)
 }
 
 /** Why the wallpaper last failed to play, written by the service and shown by the app. */
@@ -48,10 +48,10 @@ enum class PlaybackProblem {
 /**
  * Typed access to the app's settings.
  *
- * Uses the same file that `PreferenceManager.getDefaultSharedPreferences`
- * used up to version 1.3, so settings survive the upgrade without a
- * migration step. Keys and the stored scaling-mode numbers are unchanged
- * for the same reason.
+ * The file name, the first three keys and the stored scaling-mode numbers
+ * come from the original app (which used `PreferenceManager` and
+ * `MediaPlayer` constants); they are kept so the code stays comparable with
+ * upstream.
  *
  * The app and the wallpaper service run in the same process, so a write
  * from one is seen by the other's [SharedPreferences.OnSharedPreferenceChangeListener]
@@ -66,7 +66,7 @@ class SettingsStore(context: Context) {
         val uriString = prefs.getString(KEY_MEDIA_URI, null)
         val media = uriString?.takeIf { it.isNotBlank() }?.let { s ->
             val kind = prefs.getString(KEY_MEDIA_KIND, null)
-            WallpaperMedia(s.toUri(), kind?.let { it == KIND_GIF })
+            WallpaperMedia(s.toUri(), kind == KIND_GIF)
         }
         return WallpaperSettings(
             media = media,
@@ -89,7 +89,7 @@ class SettingsStore(context: Context) {
      * belong to the previous file, and any old error is cleared.
      */
     fun setMedia(media: WallpaperMedia, displayName: String?, durationMs: Long) = prefs.edit {
-        putString(KEY_MEDIA_KIND, if (media.isGif == true) KIND_GIF else KIND_VIDEO)
+        putString(KEY_MEDIA_KIND, if (media.isGif) KIND_GIF else KIND_VIDEO)
         putString(KEY_DISPLAY_NAME, displayName)
         putLong(KEY_DURATION_MS, durationMs)
         putFloat(KEY_FOCUS_X, 0.5f)
@@ -127,12 +127,12 @@ class SettingsStore(context: Context) {
     }
 
     companion object {
-        // Keys from version 1.x — do not rename.
+        // Keys inherited from the original app.
         const val KEY_MEDIA_URI = "selected_video_uri"
         const val KEY_SPEED = "playback_speed"
         const val KEY_SCALING_MODE = "scaling_mode"
 
-        // Added in 2.0.
+        // Added in this fork (2.0).
         const val KEY_MEDIA_KIND = "media_kind"
         const val KEY_DISPLAY_NAME = "media_display_name"
         const val KEY_DURATION_MS = "media_duration_ms"
@@ -152,7 +152,7 @@ class SettingsStore(context: Context) {
         const val MIN_SPEED = 0.25f
         const val MAX_SPEED = 2.0f
 
-        // Version 1.x stored MediaPlayer.VIDEO_SCALING_MODE_* numbers.
+        // The original app stored MediaPlayer.VIDEO_SCALING_MODE_* numbers.
         private const val STORED_FIT = 1
         private const val STORED_FILL = 2
 

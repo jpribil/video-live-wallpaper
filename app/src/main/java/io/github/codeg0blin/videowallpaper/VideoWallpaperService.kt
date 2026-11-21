@@ -26,7 +26,7 @@ import java.util.concurrent.Executors
  */
 class VideoWallpaperService : WallpaperService() {
 
-    /** Single background thread for the few blocking jobs (file sniffing, frame grabs). */
+    /** Background thread for grabbing a frame for the wallpaper colours. */
     private lateinit var io: ExecutorService
 
     override fun onCreate() {
@@ -155,27 +155,13 @@ class VideoWallpaperService : WallpaperService() {
 
         private fun loadMedia() {
             val media = settings.media
-            val request = ++mediaRequest
+            ++mediaRequest
             if (media == null) {
                 controller.setMedia(null)
                 return
             }
-            if (media.isGif != null) {
-                controller.setMedia(media)
-                refreshColors()
-                return
-            }
-            // Selection from version 1.x: find out what it is without
-            // blocking the main thread (it may be a slow cloud file).
-            val library = MediaLibrary(this@VideoWallpaperService)
-            io.execute {
-                val known = library.detectKind(media)
-                main.post {
-                    if (request != mediaRequest) return@post
-                    controller.setMedia(known)
-                    refreshColors()
-                }
-            }
+            controller.setMedia(media)
+            refreshColors()
         }
 
         private fun refreshColors() {
