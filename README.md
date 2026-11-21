@@ -33,8 +33,7 @@ A small Android app that lets you pick any video or animated GIF from your devic
 
 ## Install
 
-- **F-Droid / GitHub (upstream app, version 1.x):** see the [upstream project](https://github.com/codeg0blin/video-live-wallpaper).
-- **This fork:** build it yourself (below), or download the APK artifact from a run of the *Build* workflow in this repository's Actions tab (unsigned release APK, or a debug APK that installs next to other builds).
+This fork has no store listing. Either build it yourself (see [Building](#building)), or download the `apks` artifact from a run of the *Build* workflow in this repository's Actions tab. The artifact contains an unsigned release APK (sign it before installing) and a debug APK that installs next to other builds.
 
 Requires Android 8.0 (API 26) or newer.
 
@@ -79,7 +78,7 @@ Per-version release notes are in [`fastlane/metadata/android/en-US/changelogs`](
 
 ## Contributing
 
-Bug reports and suggestions for the original app are welcome via [upstream issues](https://github.com/codeg0blin/video-live-wallpaper/issues).
+This is a personal fork. Report problems with it in this repository. Problems in code that this fork hasn't changed can also be reported to the [original project](https://github.com/codeg0blin/video-live-wallpaper/issues).
 
 ## License
 

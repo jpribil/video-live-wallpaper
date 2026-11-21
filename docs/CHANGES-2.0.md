@@ -53,7 +53,7 @@ palette (with a DayNight parent, sliders and switches got light-mode colours
 in light mode); a themed (monochrome) launcher icon was added; backups and
 device transfers explicitly exclude the app's data (as `allowBackup="false"`
 already did on older Android); debug and staging builds get their own
-application IDs so they install next to the F-Droid build.
+application IDs so they install next to a release build.
 
 ## Device test
 

@@ -146,4 +146,4 @@ holds no URI permissions at all.
 | staging | `.staging` | yes | debug key |
 | release | — | yes | (unsigned; sign for distribution) |
 
-The suffixes let all three be installed side by side with the F-Droid build.
+The suffixes let the debug and staging builds be installed side by side with a release build of the app.
