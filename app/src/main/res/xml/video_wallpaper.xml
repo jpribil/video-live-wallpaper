@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- settingsActivity: the system wallpaper picker shows a "Settings" button
+     that opens the app, so the wallpaper can be adjusted from there. -->
 <wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/wallpaper_description"
+    android:settingsActivity="io.github.codeg0blin.videowallpaper.MainActivity"
     android:thumbnail="@mipmap/ic_launcher" />

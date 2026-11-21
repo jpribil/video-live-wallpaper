@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Video Live Wallpaper</string>
+    <string name="wallpaper_description">Přehrává vybrané video nebo GIF jako živou tapetu</string>
+    <string name="title">Video Live Wallpaper</string>
+    <string name="subtitle">Vyberte video nebo GIF a nastavte ho jako tapetu. Živá tapeta platí pro plochu i zamykací obrazovku.</string>
+
+    <string name="pick_video">Vybrat video nebo GIF</string>
+    <string name="no_video_selected">Není vybrané žádné video ani GIF</string>
+    <string name="preview_description">Náhled tapety ve tvaru obrazovky</string>
+    <string name="pan_hint">Tažením náhledu zvolíte viditelnou část · dvojklepnutím vycentrujete</string>
+    <string name="importing">Kopíruji…</string>
+    <string name="importing_percent">Kopíruji… %1$d %%</string>
+
+    <string name="speed_label">Rychlost přehrávání</string>
+    <string name="crop_label">Ořez</string>
+    <string name="crop_fill">Vyplnit (ořez)</string>
+    <string name="crop_fit">Celý obraz</string>
+    <string name="trim_label">Přehrávaný úsek</string>
+
+    <string name="option_parallax">Posouvat při přepínání ploch (jen Vyplnit)</string>
+    <string name="option_pause_power_save">Pozastavit v režimu Spořič baterie</string>
+    <string name="option_restart_on_show">Pokaždé začít od začátku</string>
+
+    <string name="set_wallpaper">Nastavit jako tapetu</string>
+    <string name="wallpaper_active">Toto je vaše aktuální tapeta. Změny se projeví hned.</string>
+    <string name="select_video_first">Nejdřív vyberte video nebo GIF</string>
+    <string name="error_live_wallpaper_unavailable">Toto zařízení nepodporuje živé tapety</string>
+
+    <string name="import_unreadable">Soubor se nepodařilo přečíst.</string>
+    <string name="import_no_space">Na zkopírování souboru není dost volného místa.</string>
+    <string name="import_not_video">Soubor neobsahuje video.</string>
+    <string name="error_gif_unusable">GIF se nepodařilo načíst. Může být poškozený nebo větší než 50 MB.</string>
+
+    <string name="problem_source_missing">Soubor tapety už nejde přečíst. Vyberte ho znovu.</string>
+    <string name="problem_unsupported">Toto zařízení vybraný soubor neumí přehrát. Zkuste ho převést do MP4 (H.264).</string>
+    <string name="problem_playback_failed">Přehrávání opakovaně selhávalo, tapeta to proto přestala zkoušet. Znovu to zkusí při příštím zapnutí obrazovky.</string>
+    <string name="problem_renderer_failed">Tapeta na tomto zařízení nedokázala spustit grafiku.</string>
+</resources>

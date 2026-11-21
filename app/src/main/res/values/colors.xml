@@ -2,7 +2,11 @@
 <resources>
     <color name="background">#0E0F12</color>
     <color name="surface">#1B1D22</color>
+    <color name="surface_variant">#2C2F36</color>
     <color name="accent">#6C5CE7</color>
     <color name="text_primary">#F5F5F7</color>
     <color name="text_secondary">#9A9CA5</color>
+    <color name="overlay">#B30E0F12</color>
+    <color name="problem_background">#3A1E22</color>
+    <color name="problem_text">#FFD9DC</color>
 </resources>

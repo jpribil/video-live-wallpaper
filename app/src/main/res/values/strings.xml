@@ -4,18 +4,39 @@
     <string name="wallpaper_description">Plays your chosen video or GIF as a live wallpaper</string>
     <string name="title">Video Live Wallpaper</string>
     <string name="subtitle">Pick a video or GIF and set it as your wallpaper. Live wallpapers apply to both home and lock screen.</string>
-    <string name="pick_video">Choose Video or GIF</string>
+    <string name="version_format" translatable="false">v%1$s</string>
+
+    <string name="pick_video">Choose video or GIF</string>
     <string name="no_video_selected">No video or GIF selected</string>
-    <string name="set_wallpaper">Set as Wallpaper</string>
+    <string name="preview_description">Preview of the wallpaper, shaped like your screen</string>
+    <string name="pan_hint">Drag the preview to choose the visible part · double-tap to centre</string>
+    <string name="importing">Copying…</string>
+    <string name="importing_percent">Copying… %1$d %%</string>
+
+    <string name="speed_label">Playback speed</string>
+    <string name="speed_format" translatable="false">%1$.2f×</string>
+    <string name="crop_label">Crop mode</string>
+    <string name="crop_fill">Fill (crop)</string>
+    <string name="crop_fit">Fit (whole)</string>
+    <string name="trim_label">Loop section</string>
+    <string name="trim_format" translatable="false">%1$s – %2$s</string>
+
+    <string name="option_parallax">Move with home screen pages (Fill only)</string>
+    <string name="option_pause_power_save">Pause in Battery Saver</string>
+    <string name="option_restart_on_show">Start from the beginning each time it appears</string>
+
+    <string name="set_wallpaper">Set as wallpaper</string>
+    <string name="wallpaper_active">This is your current wallpaper. Changes apply straight away.</string>
     <string name="select_video_first">Please choose a video or GIF first</string>
     <string name="error_live_wallpaper_unavailable">Live wallpapers aren\'t supported on this device</string>
-    <string name="speed_label">Playback speed</string>
-    <string name="speed_default_display">1.0x</string>
-    <string name="crop_label">Crop mode</string>
-    <string name="crop_fill">Fill (crop edges)</string>
-    <string name="crop_fit">Fit (show all, may letterbox)</string>
-    <string name="gif_preview_description">Preview of the selected GIF</string>
-    <string name="error_gif_unusable">That GIF couldn\'t be loaded. It may be damaged or too large.</string>
-    <string name="version_format">v%1$s</string>
 
+    <string name="import_unreadable">That file couldn\'t be read.</string>
+    <string name="import_no_space">Not enough free storage to copy that file.</string>
+    <string name="import_not_video">That file doesn\'t contain a video.</string>
+    <string name="error_gif_unusable">That GIF couldn\'t be loaded. It may be damaged or larger than 50 MB.</string>
+
+    <string name="problem_source_missing">The wallpaper file can no longer be read. Choose it again.</string>
+    <string name="problem_unsupported">This device can\'t play the selected file. Try converting it to MP4 (H.264).</string>
+    <string name="problem_playback_failed">Playback kept failing, so the wallpaper stopped retrying. It will try again next time the screen turns on.</string>
+    <string name="problem_renderer_failed">The wallpaper couldn\'t start its graphics on this device.</string>
 </resources>

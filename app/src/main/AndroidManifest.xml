@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Needed to read the video file the user picks, persisted across reboots -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <!-- No storage permissions: files come from the system picker (which
+         grants access to just that file) and are copied into private storage.
+         No INTERNET permission either. -->
 
     <queries>
         <intent>
@@ -15,6 +14,8 @@
 
     <application
         android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:supportsRtl="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.VideoWallpaper"
@@ -23,7 +24,7 @@
         <activity
             android:name="io.github.codeg0blin.videowallpaper.MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

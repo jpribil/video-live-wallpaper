@@ -67,6 +67,24 @@ class GifPlayer(
         }
     }
 
+    /**
+     * Jumps back to the first frame and shows it immediately. Keeps playing
+     * if it was playing; if paused, the first frame is shown and playback
+     * stays paused.
+     */
+    fun restart() {
+        handler.post {
+            handler.removeCallbacks(tick)
+            decoder.rewind()
+            if (running) {
+                tick.run()
+            } else {
+                decoder.advance()
+                onFrame(decoder)
+            }
+        }
+    }
+
     /** Stops playback permanently. The decoder is dropped along with this object. */
     fun release() {
         pause()
