@@ -1,0 +1,22 @@
+Vyberte libovolné video nebo animovaný GIF a nastavte ho jako smyčkovou živou tapetu.
+
+Funkce:
+* Výběr videa nebo GIFu systémovým výběrem souborů. Aplikace si uloží vlastní kopii, takže tapeta funguje dál, i když originál přesunete, smažete nebo je v cloudu
+* Náhled ve tvaru vašeho displeje, který ukazuje přesně to, co uvidíte na tapetě
+* Nastavitelná rychlost přehrávání (0,25× až 2,0×)
+* „Vyplnit“ (ořízne okraje, aby pokryl displej) nebo „Celý obraz“ (zobrazí celý snímek, případně s černými pruhy)
+* V režimu Vyplnit zvolíte tažením náhledu, která část obrazu bude vidět
+* Přehrávání jen vybraného úseku videa
+* Volitelně: posun při přepínání ploch, pozastavení ve Spořiči baterie, start od začátku při každém zobrazení tapety
+* Barvy Material You se přizpůsobí tapetě
+* Plynulá smyčka; videa natočená na výšku se zobrazí správně
+* Srozumitelná zpráva, když soubor nejde přehrát, místo prázdné tapety
+* Angličtina a čeština
+
+Poznámky ke GIFům: průhledná místa jsou černá a GIFy větší než 50 MB nejsou podporované.
+
+Některá zařízení nastaví živou tapetu na plochu i zamykací obrazovku zároveň, jiná (např. Pixely) nechají volbu v systémovém výběru.
+
+Soukromí: aplikace neobsahuje reklamy, analytiku ani sledování. Nežádá o žádná oprávnění: žádný přístup k internetu ani k úložišti. Ukládá jen soukromou kopii vybraného souboru a vaše nastavení, a to v zařízení.
+
+Svobodný software s otevřeným zdrojovým kódem pod licencí Apache License 2.0.

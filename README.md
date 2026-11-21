@@ -7,57 +7,79 @@ A small Android app that lets you pick any video or animated GIF from your devic
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg" width="260" alt="Android's live wallpaper preview screen">
 </p>
 
+> **This is a fork** of [codeg0blin/video-live-wallpaper](https://github.com/codeg0blin/video-live-wallpaper).
+> Version 2.0 reworks playback, adds several features and fixes stability problems;
+> see [docs/CHANGES-2.0.md](docs/CHANGES-2.0.md) for what changed and why, and
+> [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the app is put together.
+> The screenshots above are still from version 1.3.
+
 ## Features
 
-- Pick a video or animated GIF with the system file picker
-- Preview it looping (muted) before setting it
-- Adjustable playback speed (0.25x–2.0x)
-- Fill (crop to cover the screen) or Fit (show the whole frame, letterboxed if needed) scaling, shown in both the preview and the wallpaper
-- Portrait phone videos display the right way up
-- One-tap wallpaper setting through Android's own live wallpaper picker
-- No ads, no analytics, no network access of any kind
+- Pick a video or animated GIF with the system file picker. The file is copied into the app's private storage, so the wallpaper keeps working if the original is moved, renamed, deleted or lives on a cloud drive or SD card.
+- A preview shaped like your screen, drawn by the same renderer as the wallpaper, so what you see is exactly what you get
+- Adjustable playback speed (0.25×–2.0×)
+- Fill (crop to cover the screen) or Fit (show the whole frame, letterboxed if needed)
+- In Fill mode, drag the preview to choose which part of the picture is visible; double-tap to centre it again
+- Loop only part of a video (trim start and end)
+- Optional: move the picture as you swipe between home screen pages (parallax, Fill mode, launchers that report page offsets)
+- Optional: pause in Battery Saver
+- Optional: start from the beginning every time the wallpaper appears
+- Gives Android the wallpaper's colours, so Material You theming and the lock-screen clock match it
+- Seamless looping (Media3/ExoPlayer) and portrait phone videos shown the right way up
+- If the wallpaper can't play its file, the app says why instead of the wallpaper going silently black
+- "Settings" in the system wallpaper picker opens the app
+- English and Czech
+- No ads, no analytics, no network access of any kind, no storage permissions
 
 ## Install
 
-- **F-Droid:** [Video Live Wallpaper on F-Droid](https://f-droid.org/packages/io.github.codeg0blin.videowallpaper/)
-- **GitHub:** download the APK from the [Releases](https://github.com/codeg0blin/video-live-wallpaper/releases) page.
+- **F-Droid / GitHub (upstream app, version 1.x):** see the [upstream project](https://github.com/codeg0blin/video-live-wallpaper).
+- **This fork:** build it yourself (below), or download the APK artifact from a run of the *Build* workflow in this repository's Actions tab (unsigned release APK, or a debug APK that installs next to other builds).
 
 Requires Android 8.0 (API 26) or newer.
 
 ## How it works
 
-The app implements an Android `WallpaperService` that loops your chosen video using `MediaPlayer`. Since version 1.2.0, decoded frames go to a `SurfaceTexture` and are drawn with a small OpenGL ES 2.0 renderer (`VideoFrameRenderer.kt`), which applies the video's own rotation so portrait phone clips come out upright. This is what makes Fill and Fit scaling work: Android's usual video scaling relies on resizing the display surface, which live wallpapers aren't allowed to do (see issue #1).
+The app implements an Android `WallpaperService`. Each wallpaper engine owns a `PlaybackController`, which plays the file on its own render thread:
 
-GIFs (version 1.3.0) don't go through `MediaPlayer`. `GifDecoder.kt` is a small pure-Kotlin GIF89a decoder written for this app, and `GifPlayer.kt` shows one frame at a time, timed by each frame's own delay divided by your speed setting. Frames are uploaded as textures to the same renderer, so Fill and Fit work identically for GIFs and videos. The app recognises GIFs by their file header rather than their file name. Transparent areas of a GIF are drawn black, and GIF files over 50 MB are not supported.
+- **Videos** are decoded by Media3 ExoPlayer into a `SurfaceTexture`. `VideoFrameRenderer` draws that texture onto the wallpaper surface with OpenGL ES 2.0, applying the video's rotation and the Fill/Fit placement from `CropGeometry`. (Android's own video scaling relies on resizing the display surface, which live wallpapers aren't allowed to do, see upstream issue #1.) Trimming uses ExoPlayer's clipping, and the audio track is never decoded.
+- **GIFs** are decoded by `GifDecoder.kt`, a small pure-Kotlin GIF89a decoder written for this app. `GifPlayer.kt` shows one frame at a time, timed by each frame's own delay divided by your speed setting, and frames are uploaded as textures to the same renderer, so every option works the same for GIFs and videos. GIFs are recognised by their file header, not their name. Transparent areas are drawn black, and GIF files over 50 MB are not supported.
+
+The in-app preview uses the same `PlaybackController` with a `TextureView`, in a frame with the screen's aspect ratio.
 
 Setting the wallpaper goes through Android's own system picker (`ACTION_CHANGE_LIVE_WALLPAPER`). The OS requires this for all live wallpaper apps, not just this one.
 
-Android applies a live wallpaper to the home screen and lock screen together, and the live wallpaper API has no per-screen setting. Some devices' system pickers may still offer extra choices; if yours does, the video plays on whichever screens you select.
+Android applies a live wallpaper to the home screen and lock screen together unless the system picker offers a choice (Pixels do: home, lock or both).
+
+More detail, including the threading model and the surface lifecycle, is in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Privacy
 
-The app has no internet permission and contains no analytics, tracking or advertising code. The only thing it stores is a reference (URI) to the video or GIF you picked, kept locally in `SharedPreferences` on your device.
+The app has no internet permission and no storage permission, and contains no analytics, tracking or advertising code. It stores a private copy of the video or GIF you pick (in its own app storage, deleted when you pick another file or uninstall the app) and your settings, locally in `SharedPreferences`. Nothing is included in Android backups or device-to-device transfers.
 
 ## Building
 
 Open the project in Android Studio, or build from the command line:
 
 ```
-./gradlew assembleDebug
-./gradlew assembleRelease
+./gradlew assembleDebug      # debug build, ID ...videowallpaper.debug, installs next to other builds
+./gradlew assembleStaging    # R8-shrunk release build signed with the debug key, ID ...videowallpaper.staging
+./gradlew assembleRelease    # unsigned release build
+./gradlew testDebugUnitTest  # unit tests (GIF decoder, crop geometry, error handling, formatting)
+./gradlew lintDebug          # Android lint (errors fail the build)
 ```
 
-Unit tests for the GIF decoder run with `./gradlew test`.
+Requires JDK 17 or newer (Android Studio's bundled JDK 21 works) and Android SDK platform 37. Toolchain: Android Gradle Plugin 9.4 (with its built-in Kotlin support), Gradle 9.8; `compileSdk` 37, `targetSdk` 36, `minSdk` 26.
 
-Requires JDK 17 and Android SDK 34 (`compileSdk`/`targetSdk` 34, `minSdk` 26).
+The *Build* GitHub Actions workflow (`.github/workflows/build.yml`) runs lint, the unit tests and both builds on every push.
 
 ## Changelog
 
-Per-version release notes are in [`fastlane/metadata/android/en-US/changelogs`](fastlane/metadata/android/en-US/changelogs), named by version code.
+Per-version release notes are in [`fastlane/metadata/android/en-US/changelogs`](fastlane/metadata/android/en-US/changelogs) (and `cs-CZ`), named by version code. Version 2.0.0 is version code 11.
 
 ## Contributing
 
-Bug reports and suggestions are welcome via [issues](https://github.com/codeg0blin/video-live-wallpaper/issues).
+Bug reports and suggestions for the original app are welcome via [upstream issues](https://github.com/codeg0blin/video-live-wallpaper/issues).
 
 ## License
 

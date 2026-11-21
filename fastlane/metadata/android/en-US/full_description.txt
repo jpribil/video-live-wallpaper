@@ -1,17 +1,22 @@
 Pick any video or animated GIF from your device and set it as a looping live wallpaper.
 
 Features:
-* Pick a video or GIF using the system file picker
-* Preview it looping (muted) before setting it
+* Pick a video or GIF using the system file picker. The app keeps its own copy, so the wallpaper keeps working if the original is moved, deleted or stored in the cloud
+* A preview shaped like your screen that shows exactly what the wallpaper will look like
 * Adjustable playback speed (0.25x to 2.0x)
-* Choose between "fill" (crop to cover the screen) and "fit" (show the whole frame, with letterboxing if needed) scaling, in both the preview and the wallpaper
-* Portrait phone videos display the right way up
-* One-tap wallpaper setting through Android's own live wallpaper picker
+* "Fill" (crop to cover the screen) or "Fit" (show the whole frame, with letterboxing if needed)
+* Drag the preview to choose which part of the picture is visible in Fill mode
+* Loop just a section of a video
+* Optional: move with your home screen pages (parallax), pause in Battery Saver, start from the beginning each time the wallpaper appears
+* Material You colours follow the wallpaper
+* Seamless looping; portrait phone videos display the right way up
+* Clear messages if a file can't be played, instead of a blank wallpaper
+* English and Czech
 
 GIF notes: transparent areas appear black, and GIF files over 50 MB are not supported.
 
-Android applies a live wallpaper to the home screen and lock screen together. This is a limitation of the Android live wallpaper API, not of this app. Some devices' system pickers may offer extra choices; if yours does, the wallpaper plays on whichever screens you select.
+Some devices apply a live wallpaper to the home screen and lock screen together; others (such as Pixels) let you choose in the system picker.
 
-Privacy: this app contains no ads, no analytics and no tracking. It does not request internet access. The only data it stores is a reference to the video or GIF you choose, kept locally on your device.
+Privacy: this app contains no ads, no analytics and no tracking. It requests no permissions at all: no internet access and no storage access. It stores a private copy of the file you choose and your settings, locally on your device.
 
 Free and open source software, released under the Apache License 2.0.

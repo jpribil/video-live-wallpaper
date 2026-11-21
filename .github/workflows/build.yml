@@ -1,0 +1,57 @@
+name: Build
+
+# Lint, unit tests and debug/release builds on every push and pull request.
+# The release APK is unsigned (signing keys never live in the repository);
+# both APKs are attached to the run as artifacts.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      # AGP 9 and Gradle 9 need JDK 17+; 21 matches Android Studio's runtime.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # The runner's preinstalled SDK has accepted licences, so AGP downloads
+      # the compileSdk platform and build tools it needs on first use.
+      - name: Lint, unit tests, builds
+        run: ./gradlew --no-daemon lintDebug testDebugUnitTest assembleDebug assembleRelease
+
+      - name: Upload APKs
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: apks
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/release/*.apk
+          retention-days: 14
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            app/build/reports/
+            app/build/test-results/
+          retention-days: 14
