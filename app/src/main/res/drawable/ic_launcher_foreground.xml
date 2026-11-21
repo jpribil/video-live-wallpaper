@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- A phone screen (portrait rounded rectangle) with a play triangle cut out
+     of it: "video as your screen". The triangle is a hole (evenOdd), so the
+     same drawable works as the monochrome (themed) icon. Everything stays
+     inside the 66dp safe zone of the 108dp adaptive-icon canvas. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
     <path
-        android:fillColor="#6C5CE7"
-        android:pathData="M34,30 L80,54 L34,78 Z" />
+        android:fillColor="#FFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M45,27 H63 A8,8 0 0 1 71,35 V73 A8,8 0 0 1 63,81 H45 A8,8 0 0 1 37,73 V35 A8,8 0 0 1 45,27 Z M48.5,43 L65,54 L48.5,65 Z" />
 </vector>

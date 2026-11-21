@@ -13,8 +13,8 @@ android {
         applicationId = "cz.pribil.videowallpaper"
         minSdk = 26
         targetSdk = 36
-        versionCode = 11
-        versionName = "2.0.0"
+        versionCode = 12
+        versionName = "2.0.1"
     }
 
     // Release signing. The keystore and passwords never live in the repository:
