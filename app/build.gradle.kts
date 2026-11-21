@@ -17,6 +17,22 @@ android {
         versionName = "2.0.0"
     }
 
+    // Release signing. The keystore and passwords never live in the repository:
+    // locally they come from ~/.gradle/gradle.properties, in CI from the
+    // ORG_GRADLE_PROJECT_vlw* environment variables (GitHub Secrets). Without
+    // them, assembleRelease still works and produces an unsigned APK.
+    val signingStoreFile = providers.gradleProperty("vlwStoreFile").orNull
+    val releaseSigning = if (signingStoreFile != null) {
+        signingConfigs.create("release") {
+            storeFile = file(signingStoreFile)
+            storePassword = providers.gradleProperty("vlwStorePassword").get()
+            keyAlias = providers.gradleProperty("vlwKeyAlias").get()
+            keyPassword = providers.gradleProperty("vlwKeyPassword").get()
+        }
+    } else {
+        null
+    }
+
     buildTypes {
         debug {
             // Installs next to a release build instead of clashing with its signature.
@@ -29,6 +45,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = releaseSigning
         }
         // The release build (R8-shrunk) signed with the debug key and given
         // its own ID, so it can be installed on a test phone next to the

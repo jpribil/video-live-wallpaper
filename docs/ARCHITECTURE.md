@@ -145,7 +145,7 @@ holds no URI permissions at all.
 |---|---|---|---|
 | debug | `cz.pribil.videowallpaper.debug` | no | debug key |
 | staging | `cz.pribil.videowallpaper.staging` | yes | debug key |
-| release | `cz.pribil.videowallpaper` | yes | (unsigned; sign for distribution) |
+| release | `cz.pribil.videowallpaper` | yes | release key (see RELEASING.md); unsigned if not configured |
 
 All three install side by side, and next to the original app
 (`io.github.codeg0blin.videowallpaper`). The Kotlin package and Gradle

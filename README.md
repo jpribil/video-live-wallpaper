@@ -42,7 +42,11 @@ Details: [docs/CHANGES-2.0.md](docs/CHANGES-2.0.md) (what changed, why, and how 
 
 ## Install
 
-This fork has no store listing. Either build it yourself (see [Building](#building)), or download the `apks` artifact from a run of the *Build* workflow in this repository's Actions tab. The artifact contains an unsigned release APK (sign it before installing) and a debug APK that installs next to other builds.
+Download the signed APK from this repository's [Releases](../../releases) page and open it on your phone. For automatic update checks, add the repository to [Obtainium](https://github.com/ImranR98/Obtainium). The app installs next to the original app from F-Droid (different application ID) and doesn't replace it.
+
+Signing certificate SHA-256: `8c9ae5fa883cfff543f7a1446f6bb2b4f5f576914c4fa423a5e5dde636fdc15e`
+
+How releases are made: [docs/RELEASING.md](docs/RELEASING.md).
 
 Requires Android 8.0 (API 26) or newer.
 
@@ -72,14 +76,14 @@ Open the project in Android Studio, or build from the command line:
 ```
 ./gradlew assembleDebug      # debug build, ID cz.pribil.videowallpaper.debug
 ./gradlew assembleStaging    # R8-shrunk release build signed with the debug key, ID cz.pribil.videowallpaper.staging
-./gradlew assembleRelease    # unsigned release build, ID cz.pribil.videowallpaper
+./gradlew assembleRelease    # release build, ID cz.pribil.videowallpaper (signed if the signing key is configured, see docs/RELEASING.md)
 ./gradlew testDebugUnitTest  # unit tests (GIF decoder, crop geometry, error handling, formatting)
 ./gradlew lintDebug          # Android lint (errors fail the build)
 ```
 
 Requires JDK 17 or newer (Android Studio's bundled JDK 21 works) and Android SDK platform 37. Toolchain: Android Gradle Plugin 9.4 (with its built-in Kotlin support), Gradle 9.8; `compileSdk` 37, `targetSdk` 36, `minSdk` 26.
 
-The *Build* GitHub Actions workflow (`.github/workflows/build.yml`) runs lint, the unit tests and both builds on every push.
+The *Build* GitHub Actions workflow (`.github/workflows/build.yml`) runs lint, the unit tests and both builds on every push. The *Release* workflow (`.github/workflows/release.yml`) publishes a signed APK when a `v*` tag is pushed.
 
 ## Changelog
 
