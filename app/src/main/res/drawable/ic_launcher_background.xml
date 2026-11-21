@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Diagonal violet gradient (app accent #6C5CE7 sits in the middle). -->
+<!-- Background layer of the launcher icon, from icon/01-nocni-krajina.svg
+     ("Noční krajina"): dark violet diagonal gradient with a soft glow. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
@@ -14,8 +15,12 @@
                 android:startY="0"
                 android:endX="108"
                 android:endY="108"
-                android:startColor="#8E7EFF"
-                android:endColor="#4733CF" />
+                android:startColor="#352881"
+                android:endColor="#131839" />
         </aapt:attr>
     </path>
+    <path
+        android:fillColor="#6352CF"
+        android:fillAlpha="0.23"
+        android:pathData="M46,28 a32,32 0 1,0 64,0 a32,32 0 1,0 -64,0 Z" />
 </vector>

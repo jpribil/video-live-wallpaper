@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Themed (monochrome) icon, Android 13+: the same shapes as the
+     foreground, as one silhouette. Only alpha is used; the system colours it.
+     Window outline with a mountain line, and a play button with the
+     triangle cut out (evenOdd). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="0.88"
+        android:scaleY="0.88">
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="3"
+            android:pathData="M38,28 H75 A9,9 0 0 1 84,37 V63 A9,9 0 0 1 75,72 H38 A9,9 0 0 1 29,63 V37 A9,9 0 0 1 38,28 Z" />
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="3"
+            android:strokeLineJoin="round"
+            android:pathData="M30,61 L44,48 L56,58 L64,53" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M64,40 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0 Z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M57.5,67 a14.5,14.5 0 1,0 29,0 a14.5,14.5 0 1,0 -29,0 Z M69,62.1 c0,-0.8 0.9,-1.3 1.6,-0.8 l6.3,4.9 c0.6,0.4 0.6,1.2 0,1.6 l-6.3,4.9 c-0.7,0.5 -1.6,0 -1.6,-0.8 Z" />
+    </group>
+</vector>

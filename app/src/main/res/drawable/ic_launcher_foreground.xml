@@ -1,15 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- A phone screen (portrait rounded rectangle) with a play triangle cut out
-     of it: "video as your screen". The triangle is a hole (evenOdd), so the
-     same drawable works as the monochrome (themed) icon. Everything stays
-     inside the 66dp safe zone of the 108dp adaptive-icon canvas. -->
+<!-- Foreground layer of the launcher icon, from icon/01-nocni-krajina.svg
+     ("Noční krajina"): a window onto a night landscape with a play button.
+     The artwork is scaled to 88 % around the centre so it stays inside the
+     66dp safe zone and isn't clipped by circular launcher masks. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <path
-        android:fillColor="#FFFFFF"
-        android:fillType="evenOdd"
-        android:pathData="M45,27 H63 A8,8 0 0 1 71,35 V73 A8,8 0 0 1 63,81 H45 A8,8 0 0 1 37,73 V35 A8,8 0 0 1 45,27 Z M48.5,43 L65,54 L48.5,65 Z" />
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="0.88"
+        android:scaleY="0.88">
+
+        <!-- Back card -->
+        <path
+            android:fillColor="#47399B"
+            android:strokeColor="#B5A7FF"
+            android:strokeWidth="2.5"
+            android:pathData="M33,35 H68 A10,10 0 0 1 78,45 V69 A10,10 0 0 1 68,79 H33 A10,10 0 0 1 23,69 V45 A10,10 0 0 1 33,35 Z" />
+
+        <!-- Window contents, clipped to the window -->
+        <group>
+            <clip-path android:pathData="M38,28 H75 A9,9 0 0 1 84,37 V63 A9,9 0 0 1 75,72 H38 A9,9 0 0 1 29,63 V37 A9,9 0 0 1 38,28 Z" />
+            <path android:pathData="M29,28h55v44H29z">
+                <aapt:attr name="android:fillColor">
+                    <gradient
+                        android:type="linear"
+                        android:startX="29"
+                        android:startY="28"
+                        android:endX="29"
+                        android:endY="72"
+                        android:startColor="#8371F0"
+                        android:endColor="#FAA9D5" />
+                </aapt:attr>
+            </path>
+            <path
+                android:fillColor="#FFE1EB"
+                android:pathData="M64,40 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0 Z" />
+            <path
+                android:fillColor="#5F4AC2"
+                android:pathData="M24,67 l20,-24 13,12 12,-8 21,19 v8 H24 Z" />
+            <path
+                android:fillColor="#35267E"
+                android:pathData="M23,72 l22,-16 14,7 23,-13 8,18 v13 H23 Z" />
+        </group>
+
+        <!-- Window frame -->
+        <path
+            android:strokeColor="#E0D6FF"
+            android:strokeWidth="2.5"
+            android:pathData="M38,28 H75 A9,9 0 0 1 84,37 V63 A9,9 0 0 1 75,72 H38 A9,9 0 0 1 29,63 V37 A9,9 0 0 1 38,28 Z" />
+
+        <!-- Play button -->
+        <path
+            android:fillColor="#FFF4FF"
+            android:strokeColor="#332674"
+            android:strokeWidth="2.5"
+            android:pathData="M59,67 a13,13 0 1,0 26,0 a13,13 0 1,0 -26,0 Z" />
+        <path
+            android:fillColor="#422C97"
+            android:pathData="M69,62.1 c0,-0.8 0.9,-1.3 1.6,-0.8 l6.3,4.9 c0.6,0.4 0.6,1.2 0,1.6 l-6.3,4.9 c-0.7,0.5 -1.6,0 -1.6,-0.8 Z" />
+    </group>
 </vector>
